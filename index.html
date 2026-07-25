@@ -141,6 +141,24 @@ header{
 .add-card .t{ font-family:'Lora',serif; font-size:15.5px; font-weight:600; color:var(--ink-soft); }
 .add-card .s{ font-size:12.5px; max-width:230px; line-height:1.5; }
 
+/* ---------- DEVELOPER SECTION ---------- */
+.dev-section{ max-width:1040px; margin:0 auto; padding:0 24px 60px; }
+.dev-card{
+  background:var(--panel); border:1.5px solid var(--rule); border-radius:14px;
+  box-shadow:var(--shadow); padding:26px 28px; display:flex; align-items:center; gap:20px;
+}
+.dev-avatar{
+  width:56px; height:56px; border-radius:50%; background:var(--ink); color:#f2ede0;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  font-family:'Lora',serif; font-weight:700; font-size:19px; letter-spacing:.02em;
+}
+.dev-info .eyebrow-sm{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--amber); margin-bottom:5px; font-weight:600;
+}
+.dev-info h3{ font-family:'Lora',serif; font-weight:700; font-size:18px; margin:0 0 6px; }
+.dev-info p{ font-size:13.5px; color:var(--ink-soft); line-height:1.55; margin:0; max-width:520px; }
+
 footer{
   border-top:1.5px solid var(--rule); padding:22px 24px; text-align:center;
   font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint); letter-spacing:.03em;
@@ -225,6 +243,17 @@ footer{
       </div>
     </div>
 
+  </div>
+</div>
+
+<div class="dev-section">
+  <div class="dev-card">
+    <div class="dev-avatar">DK</div>
+    <div class="dev-info">
+      <div class="eyebrow-sm">Developer</div>
+      <h3>Deepesh Kumar</h3>
+      <p>Building free, exam-ready practice tools so every student gets the prep they deserve — not just the ones who can afford it.</p>
+    </div>
   </div>
 </div>
 
