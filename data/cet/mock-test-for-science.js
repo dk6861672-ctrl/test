@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CET-2026 CUET Category — Mock Test</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --ink:#16213e;
+  --ink-soft:#5b6478;
+  --ink-faint:#8a91a6;
+  --paper:#faf6ec;
+  --panel:#ffffff;
+  --rule:#ddd4bd;
+  --rule-soft:#eae3d2;
+  --green:#2f6e51;
+  --green-bg:#e6f0ea;
+  --red:#a8402f;
+  --red-bg:#f7e9e6;
+  --amber:#b9822c;
+  --amber-bg:#faf0dd;
+  --navy-ring:#16213e;
+  --shadow: 0 1px 2px rgba(22,33,62,0.06), 0 4px 16px rgba(22,33,62,0.06);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(22,33,62,0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+  color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.serif{font-family:'Lora',Georgia,serif;}
+button{font-family:inherit;cursor:pointer;}
+::selection{background:var(--amber-bg);}
+
+/* ---------- SCREEN SWITCHING ---------- */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* ---------- LANDING / TICKET ---------- */
+#landing{
+  max-width:760px;
+  margin:0 auto;
+  padding:48px 20px 80px;
+}
+.admit-card{
+  background:var(--panel);
+  border:1.5px solid var(--ink);
+  border-radius:14px;
+  position:relative;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.admit-card::before{
+  content:"";
+  position:absolute;
+  top:0; bottom:0; left:128px;
+  width:0;
+  border-left:2px dashed var(--rule);
+}
+.ac-head{
+  background:var(--ink);
+  color:#f2ede0;
+  padding:22px 26px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+}
+.ac-head .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#c9b98a;
+  margin-bottom:6px;
+}
+.ac-head h1{
+  font-family:'Lora',serif;
+  font-weight:600;
+  font-size:26px;
+  margin:0;
+  line-height:1.25;
+}
+.ac-head .sub{
+  color:#b9c0d4;
+  font-size:13.5px;
+  margin-top:6px;
+}
+.ac-stamp{
+  border:1.5px solid #c9b98a;
+  color:#c9b98a;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:7px 10px;
+  border-radius:4px;
+  white-space:nowrap;
+  transform:rotate(2deg);
+  flex-shrink:0;
+}
+.ac-body{padding:24px 26px 6px;}
+.ac-row{
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:8px 16px;
+  padding:9px 0;
+  border-bottom:1px dotted var(--rule);
+  font-size:14px;
+}
+.ac-row:last-child{border-bottom:none;}
+.ac-row .k{color:var(--ink-faint); font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; padding-top:2px;}
+.ac-row .v{color:var(--ink);}
+.ac-form{padding:8px 26px 26px;}
+.field{margin-bottom:14px;}
+.field label{
+  display:block; font-size:11.5px; font-family:'IBM Plex Mono',monospace;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;
+}
+.field input{
+  width:100%; padding:10px 12px; border:1.5px solid var(--rule);
+  border-radius:8px; font-size:15px; background:#fffdf8; color:var(--ink);
+  font-family:inherit;
+}
+.field input:focus{outline:none; border-color:var(--ink);}
+.notice{
+  background:var(--amber-bg); border:1px solid #e4cd9a; border-radius:8px;
+  padding:12px 14px; font-size:13px; color:#6b4e18; margin:18px 26px 0; line-height:1.5;
+}
+.start-btn{
+  width:calc(100% - 52px);
+  margin:20px 26px 26px;
+  background:var(--ink); color:#f2ede0; border:none;
+  padding:15px; border-radius:9px; font-size:15.5px; font-weight:600;
+  letter-spacing:.01em;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:background .15s;
+}
+.start-btn:hover{background:#22315c;}
+.start-btn:disabled{opacity:.45; cursor:not-allowed;}
+
+.perf{
+  display:flex; justify-content:space-between; padding:0 8px; margin-top:-1px;
+}
+.perf span{
+  width:8px;height:8px;border-radius:50%;background:var(--paper);
+  border:1.5px solid var(--rule); margin-top:-5px;
+}
+
+/* ---------- TEST SCREEN ---------- */
+#testScreen{padding-bottom:40px;}
+.top-bar{
+  background:var(--ink); color:#f2ede0;
+  padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px;
+  position:sticky; top:0; z-index:50; flex-wrap:wrap;
+  border-bottom:3px solid #c9b98a;
+}
+.tb-left{display:flex; align-items:center; gap:14px;}
+.tb-title{font-family:'Lora',serif; font-weight:600; font-size:16px;}
+.tb-cand{font-size:12px; color:#b9c0d4;}
+.timer{
+  font-family:'IBM Plex Mono',monospace; font-size:19px; font-weight:600;
+  background:#0f1730; padding:7px 14px; border-radius:8px; letter-spacing:.03em;
+  border:1px solid #2a3660;
+}
+.timer.warn{color:var(--amber); border-color:var(--amber);}
+.timer.danger{color:#ff8a72; border-color:#ff8a72; animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.focus-badge{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
+  background:#4a2a1e; color:#ffb199; border:1px solid #6b3a28; padding:6px 10px;
+  border-radius:7px; display:inline-flex; align-items:center;
+}
+/* Deter casual copy/inspect during an active attempt: text becomes
+   unselectable. Form inputs stay selectable so name/roll entry still works
+   normally, and everything unlocks again once the test is submitted. */
+body.test-active #testScreen{ -webkit-user-select:none; user-select:none; }
+body.test-active #testScreen input,
+body.test-active #testScreen textarea{ -webkit-user-select:text; user-select:text; }
+.integrity-note{
+  background:var(--amber-bg); border:1px solid #e4cd9a; color:#6b4e18;
+  border-radius:9px; padding:12px 16px; font-size:13px; line-height:1.5; margin-top:14px;
+}
+.submit-btn{
+  background:#c9503f; color:#fff; border:none; padding:10px 18px;
+  border-radius:8px; font-size:13.5px; font-weight:700; letter-spacing:.02em;
+}
+.submit-btn:hover{background:#b2402f;}
+
+.section-tabs{
+  display:flex; gap:0; background:#fffdf8; border-bottom:1.5px solid var(--rule);
+  overflow-x:auto; position:sticky; top:63px; z-index:40;
+}
+.section-tabs button{
+  flex:1; min-width:150px; background:none; border:none; padding:12px 10px;
+  font-size:12.5px; font-weight:600; color:var(--ink-soft); border-bottom:3px solid transparent;
+  font-family:'IBM Plex Mono',monospace; letter-spacing:.03em;
+}
+.section-tabs button.active{color:var(--ink); border-bottom-color:var(--ink); background:var(--paper);}
+.section-tabs button .cnt{display:block; font-family:'Inter'; font-weight:400; font-size:10.5px; margin-top:2px; color:var(--ink-faint);}
+
+.layout{
+  display:grid; grid-template-columns:1fr 300px; gap:0; max-width:1180px; margin:0 auto;
+  align-items:start;
+}
+.qpanel{padding:26px 30px 10px; min-width:0;}
+.passage-box{
+  background:#fff9ec; border:1px solid #e4d6ac; border-left:4px solid #c9a44e;
+  border-radius:8px; padding:16px 18px; margin-bottom:20px; font-size:14px; line-height:1.7;
+  color:#3d3320; max-height:260px; overflow-y:auto;
+}
+.passage-box .plabel{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase;
+  letter-spacing:.08em; color:#a07f2e; margin-bottom:8px; font-weight:600;
+}
+.qhead{display:flex; align-items:baseline; gap:10px; margin-bottom:14px;}
+.qnum-badge{
+  font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px;
+  background:var(--ink); color:#f2ede0; padding:4px 10px; border-radius:6px;
+}
+.qmeta{font-size:11.5px; color:var(--ink-faint); font-family:'IBM Plex Mono',monospace;}
+.qstem{font-size:17px; line-height:1.55; margin-bottom:22px; color:var(--ink);}
+
+.options{display:flex; flex-direction:column; gap:11px; margin-bottom:26px;}
+.option{
+  display:flex; align-items:center; gap:14px; padding:13px 16px;
+  border:1.5px solid var(--rule); border-radius:10px; background:var(--panel);
+  transition:border-color .12s, background .12s;
+}
+.option:hover{border-color:#b7ac8c;}
+.option.selected{border-color:var(--green); background:var(--green-bg);}
+.bubble{
+  width:26px; height:26px; border-radius:50%; border:2px solid var(--ink-faint);
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:700; color:var(--ink-faint);
+}
+.option.selected .bubble{
+  border-color:var(--green); background:var(--green); color:#fff;
+}
+.opt-text{font-size:14.5px; color:var(--ink); line-height:1.4;}
+
+.qnav{display:flex; justify-content:space-between; gap:10px; padding-top:6px; border-top:1px dashed var(--rule); flex-wrap:wrap;}
+.qnav-left, .qnav-right{display:flex; gap:8px;}
+.nbtn{
+  padding:10px 16px; border-radius:8px; font-size:13px; font-weight:600; border:1.5px solid var(--rule);
+  background:var(--panel); color:var(--ink);
+}
+.nbtn:hover{border-color:var(--ink);}
+.nbtn.primary{background:var(--ink); color:#f2ede0; border-color:var(--ink);}
+.nbtn.primary:hover{background:#22315c;}
+.nbtn.ghost{color:var(--red); border-color:var(--rule);}
+.nbtn:disabled{opacity:.35; cursor:not-allowed;}
+
+/* palette */
+.sidebar{
+  padding:22px 20px; position:sticky; top:118px; max-height:calc(100vh - 140px); overflow-y:auto;
+}
+.legend{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; font-size:10.5px; color:var(--ink-soft);}
+.legend .li{display:flex; align-items:center; gap:5px;}
+.legend .dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink-faint);}
+.legend .dot.answered{background:var(--green); border-color:var(--green);}
+.legend .dot.visited{background:var(--red-bg); border-color:var(--red);}
+.legend .dot.unvisited{background:var(--panel);}
+.pal-section-label{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--ink-faint); margin:14px 0 8px; font-weight:600;
+}
+.pal-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:7px;}
+.pal-btn{
+  aspect-ratio:1; border-radius:6px; border:1.5px solid var(--rule); background:var(--panel);
+  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; color:var(--ink-soft);
+  display:flex; align-items:center; justify-content:center; position:relative;
+}
+.pal-btn.answered{background:var(--green); border-color:var(--green); color:#fff;}
+.pal-btn.visited{background:var(--red-bg); border-color:var(--red); color:var(--red);}
+.pal-btn.current{box-shadow:0 0 0 2.5px var(--navy-ring); border-color:var(--navy-ring);}
+
+.summary-box{
+  margin-top:18px; padding:14px; background:var(--panel); border:1px solid var(--rule);
+  border-radius:9px; font-size:12.5px;
+}
+.summary-box .srow{display:flex; justify-content:space-between; padding:4px 0; color:var(--ink-soft);}
+.summary-box .srow b{color:var(--ink);}
+
+/* ---------- CONFIRM MODAL ---------- */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(22,33,62,0.55); z-index:100;
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.modal{
+  background:var(--panel); border-radius:14px; max-width:420px; width:100%;
+  padding:26px; box-shadow:0 20px 60px rgba(0,0,0,0.3);
+}
+.modal h3{font-family:'Lora',serif; margin:0 0 10px; font-size:19px;}
+.modal p{font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin:0 0 16px;}
+.modal-stats{display:flex; gap:10px; margin-bottom:18px;}
+.mstat{flex:1; text-align:center; background:var(--paper); border-radius:8px; padding:12px 6px;}
+.mstat .n{font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:700;}
+.mstat .l{font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-top:3px;}
+.modal-actions{display:flex; gap:10px;}
+.modal-actions button{flex:1; padding:12px; border-radius:8px; font-size:13.5px; font-weight:600; border:1.5px solid var(--rule);}
+.modal-actions .cancel{background:var(--panel); color:var(--ink);}
+.modal-actions .confirm{background:var(--red); color:#fff; border-color:var(--red);}
+
+/* ---------- RESULTS ---------- */
+#resultsScreen{max-width:920px; margin:0 auto; padding:36px 20px 80px;}
+.res-hero{
+  background:var(--ink); color:#f2ede0; border-radius:16px; padding:34px 30px;
+  display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+  box-shadow:var(--shadow);
+}
+.res-hero .rh-left .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#c9b98a;}
+.res-hero .rh-left h2{font-family:'Lora',serif; font-size:24px; margin:6px 0 0;}
+.res-score{text-align:right;}
+.res-score .big{font-family:'IBM Plex Mono',monospace; font-size:46px; font-weight:700; line-height:1;}
+.res-score .of{font-size:14px; color:#b9c0d4;}
+.res-score .pct{font-size:13px; color:#c9b98a; margin-top:4px; font-family:'IBM Plex Mono',monospace;}
+
+.res-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:22px 0;}
+.res-card{background:var(--panel); border:1px solid var(--rule); border-radius:11px; padding:16px; text-align:center;}
+.res-card .n{font-family:'IBM Plex Mono',monospace; font-size:24px; font-weight:700;}
+.res-card .l{font-size:11px; color:var(--ink-soft); margin-top:4px;}
+.res-card.correct .n{color:var(--green);}
+.res-card.wrong .n{color:var(--red);}
+.res-card.skip .n{color:var(--amber);}
+
+.section-table{width:100%; border-collapse:collapse; background:var(--panel); border-radius:11px; overflow:hidden; border:1px solid var(--rule); margin-bottom:26px;}
+.section-table th{
+  background:var(--paper); text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+  color:var(--ink-soft); padding:10px 14px; font-family:'IBM Plex Mono',monospace; border-bottom:1px solid var(--rule);
+}
+.section-table td{padding:11px 14px; font-size:13.5px; border-bottom:1px solid var(--rule-soft);}
+.section-table tr:last-child td{border-bottom:none;}
+.section-table td.num{font-family:'IBM Plex Mono',monospace;}
+.section-table tr.total td{font-weight:700; background:#fbf8f0;}
+
+.review-head{display:flex; justify-content:space-between; align-items:center; margin:30px 0 14px; flex-wrap:wrap; gap:10px;}
+.review-head h3{font-family:'Lora',serif; margin:0; font-size:19px;}
+.filter-tabs{display:flex; gap:6px; background:var(--panel); border:1px solid var(--rule); border-radius:9px; padding:4px;}
+.filter-tabs button{background:none; border:none; padding:7px 13px; border-radius:6px; font-size:12px; font-weight:600; color:var(--ink-soft);}
+.filter-tabs button.active{background:var(--ink); color:#f2ede0;}
+
+.review-item{background:var(--panel); border:1px solid var(--rule); border-radius:10px; padding:16px 18px; margin-bottom:10px;}
+.review-item .ritop{display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;}
+.ri-badge{font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:5px;}
+.ri-badge.correct{background:var(--green-bg); color:var(--green);}
+.ri-badge.wrong{background:var(--red-bg); color:var(--red);}
+.ri-badge.skip{background:var(--amber-bg); color:var(--amber);}
+.ri-sec{font-size:11px; color:var(--ink-faint); font-family:'IBM Plex Mono',monospace;}
+.ri-stem{font-size:14px; color:var(--ink); margin-bottom:8px; line-height:1.5;}
+.ri-answers{display:flex; gap:18px; flex-wrap:wrap; font-size:12.5px;}
+.ri-answers .lbl{color:var(--ink-faint); font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; margin-right:5px;}
+.ri-answers .ua{color:var(--red);}
+.ri-answers .ca{color:var(--green);}
+
+.res-actions{display:flex; gap:10px; margin-top:26px; flex-wrap:wrap;}
+.res-actions button{padding:12px 20px; border-radius:9px; font-size:13.5px; font-weight:600; border:1.5px solid var(--rule); background:var(--panel); color:var(--ink);}
+.res-actions button.primary{background:var(--ink); color:#f2ede0; border-color:var(--ink);}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{position:static; max-height:none;}
+  .qpanel{padding:20px 16px;}
+  .res-grid{grid-template-columns:repeat(2,1fr);}
+  .top-bar{padding:12px 14px;}
+  .tb-title{font-size:14px;}
+}
+@media print{
+  .top-bar,.section-tabs,.res-actions,#landing,#testScreen{display:none !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LANDING ================= -->
+<div id="landing" class="screen active">
+  <div class="admit-card">
+    <div class="ac-head">
+      <div>
+        <div class="eyebrow">Practice Admit Card</div>
+        <h1>CET-2026 — CUET Category</h1>
+        <div class="sub">Full-Length Practice Test · CUET-UG · Domain Subject: Science</div>
+      </div>
+      <div class="ac-stamp">Unofficial<br>Mock Paper</div>
+    </div>
+    <div class="ac-body">
+      <div class="ac-row"><div class="k">Modelled on</div><div class="v">DE.44(1)/Edn./SB/2026/2460-2464, dated 07/05/2026 — Directorate of Education, GNCTD</div></div>
+      <div class="ac-row"><div class="k">Duration</div><div class="v">2 hours (120 minutes × 1) &nbsp;·&nbsp; auto-submits when time runs out</div></div>
+      <div class="ac-row"><div class="k">Questions</div><div class="v">120 total &nbsp;·&nbsp; 120 marks</div></div>
+      <div class="ac-row"><div class="k">Sections</div><div class="v">A. English Language (1–30) &nbsp;·&nbsp; B. General Knowledge (31–60) &nbsp;·&nbsp; C. Mental Ability (61–90) &nbsp;·&nbsp; D. Domain — Science (91–120)</div></div>
+      <div class="ac-row"><div class="k">Marking</div><div class="v">+1 for each correct answer &nbsp;·&nbsp; −0.25 for each wrong answer &nbsp;·&nbsp; 0 for unattempted</div></div>
+    </div>
+    <div class="notice">
+      Attempt the full paper in one sitting for realistic practice. You can move freely between sections and questions, and change any answer before you submit. Full scored results — overall, section-wise, and question-by-question — appear immediately after you submit.
+    </div>
+    <div class="notice" style="background:#f3f0e8; border-color:var(--rule); color:var(--ink-soft);">
+      Right-click, copy, and quick devtools shortcuts are disabled while the test is in progress, and switching away from this tab is logged and shown on the result slip. This deters casual peeking during a supervised attempt — it isn't unbreakable against someone determined to bypass it.
+    </div>
+    <div class="ac-form">
+      <div class="field">
+        <label>Candidate name (optional)</label>
+        <input id="candName" type="text" placeholder="Enter name">
+      </div>
+      <div class="field">
+        <label>Roll no. (optional)</label>
+        <input id="candRoll" type="text" placeholder="Enter roll number">
+      </div>
+    </div>
+    <button class="start-btn" id="startBtn">Start test — 2:00:00 on the clock</button>
+    <div class="perf"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<!-- ================= TEST ================= -->
+<div id="testScreen" class="screen">
+  <div class="top-bar">
+    <div class="tb-left">
+      <div>
+        <div class="tb-title">CET-2026 · CUET Category</div>
+        <div class="tb-cand" id="tbCand">Candidate</div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span class="focus-badge" id="focusBadge" style="display:none;"></span>
+      <div class="timer mono" id="timerDisplay">02:00:00</div>
+      <button class="submit-btn" id="submitBtn">Submit test</button>
+    </div>
+  </div>
+  <div class="section-tabs" id="sectionTabs"></div>
+  <div class="layout">
+    <div class="qpanel" id="qpanel"></div>
+    <div class="sidebar" id="sidebar"></div>
+  </div>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;">
+  <div class="modal">
+    <h3 id="modalTitle">Submit the test?</h3>
+    <p id="modalText">You still have time remaining. Once submitted, you can't change any answers.</p>
+    <div class="modal-stats">
+      <div class="mstat"><div class="n" id="mAnswered">0</div><div class="l">Answered</div></div>
+      <div class="mstat"><div class="n" id="mVisited">0</div><div class="l">Visited, blank</div></div>
+      <div class="mstat"><div class="n" id="mUntouched">0</div><div class="l">Not visited</div></div>
+    </div>
+    <div class="modal-actions">
+      <button class="cancel" id="modalCancel">Keep working</button>
+      <button class="confirm" id="modalConfirm">Submit now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= RESULTS ================= -->
+<div id="resultsScreen" class="screen"></div>
+
+<script id="test-data" type="application/json">{"passages":{"p1":"For most of human history, night meant darkness, broken only by the\nmoon, the stars, and the occasional fire. In the last century and a\nhalf, artificial lighting has transformed the night into something\ncloser to a dim extension of the day. Streetlights, illuminated\nbillboards, and the glow spilling from windows now form a dome of\nbrightness over most cities, a phenomenon scientists call 'sky glow'.\nWhile the convenience of never being wholly in the dark is easy to take\nfor granted, ecologists have grown increasingly concerned about what\nthis constant illumination does to the natural world.\n\nMany species regulate their behaviour according to the rhythm of light\nand darkness. Nocturnal insects, for instance, use the moon as a\nnavigational reference; artificial lights disrupt this system, drawing\nmoths and other insects into fatal, disoriented circling around bulbs.\nBirds that migrate at night can be pulled off course by the glow of city\nskylines, sometimes colliding with buildings they would otherwise have\navoided. Sea turtle hatchlings, which instinctively crawl toward the\nbrightest horizon after emerging from their nests --- historically the\nmoonlit sea --- are increasingly drawn inland towards artificially lit\nroads and buildings instead.\n\nThe effects are not confined to animals that are active at night. Trees\nnear streetlights have been observed to retain their leaves later into\nautumn than their counterparts in darker areas, since artificial light\ninterferes with the hormonal cues that signal the changing season. Even\nhuman circadian rhythms, calibrated over millennia to the natural cycle\nof day and night, are measurably disturbed by exposure to artificial\nlight after sunset.\n\nSome cities have begun experimenting with solutions: shielded\nstreetlights that direct light downward rather than outward,\nmotion-activated lighting in low-traffic areas, and 'dark sky' zones\nnear coastlines during turtle nesting season. These measures suggest\nthat the problem, unlike many forms of environmental damage, may be\ncomparatively simple to mitigate --- not by abandoning artificial light\naltogether, but by using it more deliberately.\n\nAnswer questions 1--6 based on the passage above.\n\n1. According to the passage, 'sky glow' refers to:\n\n> (A) The natural light emitted by stars in a clear night sky\n>\n> (B) The collective brightness cast over cities by artificial\n> lighting\n>\n> (C) A phenomenon exclusive to coastal cities\n>\n> (D) The glow produced specifically by illuminated billboards\n\n2. Nocturnal insects are drawn into 'fatal, disoriented circling\naround bulbs' because:\n\n> (A) They mistake bulbs for a source of food\n>\n> (B) Bulbs emit a heat signature similar to the sun\n>\n> (C) Artificial light disrupts their natural navigation by the moon\n>\n> (D) They are naturally attracted to man-made structures\n\n3. The passage suggests that sea turtle hatchlings' movement toward\nartificial lights is a result of:\n\n> (A) A random and unpredictable pattern of behaviour\n>\n> (B) An evolved instinct being misled by a change in environment\n>\n> (C) A learned behaviour passed down from adult turtles\n>\n> (D) Direct physical attraction to heat sources\n\n4. Which of the following is NOT mentioned in the passage as being\naffected by artificial light?\n\n> (A) Insect navigation\n>\n> (B) Bird migration\n>\n> (C) Fish breeding cycles\n>\n> (D) Tree leaf retention\n\n5. The author's tone toward the possibility of addressing light\npollution can best be described as:\n\n> (A) Pessimistic and resigned\n>\n> (B) Cautiously optimistic\n>\n> (C) Entirely dismissive\n>\n> (D) Angry and accusatory\n\n6. The word 'mitigate' as used in the final paragraph most nearly\nmeans:\n\n> (A) Worsen\n>\n> (B) Ignore\n>\n> (C) Lessen\n>\n> (D) Investigate","p2":"Before the railway age, time was a strictly local affair. Every town\nset its clocks by the sun, so that noon was the moment the sun stood\nhighest above that particular town's horizon. Two towns a hundred miles\napart, aligned east to west, might differ by several minutes, a\ndiscrepancy that mattered little when travel between them took the\nbetter part of a day. Rail travel changed this. As trains began covering\nsuch distances in a single hour, the patchwork of local times became not\nmerely inconvenient but hazardous: timetables drawn up according to one\ntown's clock made little sense to a station master governing his\nplatform by another.\n\nThe solution, when it came, was not obvious to everyone. Standardising\ntime meant asking entire regions to abandon the sun as their timekeeper\nin favour of an arbitrary, centrally decided hour --- a proposition that\nstruck many nineteenth-century observers as an affront to nature itself.\nNewspapers in several countries published outraged letters accusing\nrailway companies of dictating to the heavens. Nevertheless, by the\n1880s, most industrialised nations had adopted standard time zones,\ntypically an hour wide, radiating out from a reference meridian.\n\nThe change was, in retrospect, almost inevitable, driven less by\nphilosophical conviction than by the practical demands of coordinating\nschedules across a widening web of railway lines. Yet it carried a\nsubtler consequence that few at the time anticipated: it habituated\nentire populations to thinking of time as something to be synchronised\nand managed centrally rather than observed locally. The clock in the\nrailway station, not the position of the sun, became the final authority\non when a day began.\n\nThis shift from local to standardised time is often cited as an early\ninstance of a broader pattern: infrastructure introduced for one narrow\npurpose --- in this case, avoiding train collisions --- ends up\nreshaping habits of mind far beyond its original intention."},"questions":[{"num":1,"section":"A","stem":"According to the passage, 'sky glow' refers to:","options":{"A":"The natural light emitted by stars in a clear night sky","B":"The collective brightness cast over cities by artificial lighting","C":"A phenomenon exclusive to coastal cities","D":"The glow produced specifically by illuminated billboards"},"code":1},{"num":2,"section":"A","stem":"Nocturnal insects are drawn into 'fatal, disoriented circling around bulbs' because:","options":{"A":"They mistake bulbs for a source of food","B":"Bulbs emit a heat signature similar to the sun","C":"Artificial light disrupts their natural navigation by the moon","D":"They are naturally attracted to man-made structures"},"code":1},{"num":3,"section":"A","stem":"The passage suggests that sea turtle hatchlings' movement toward artificial lights is a result of:","options":{"A":"A random and unpredictable pattern of behaviour","B":"An evolved instinct being misled by a change in environment","C":"A learned behaviour passed down from adult turtles","D":"Direct physical attraction to heat sources"},"code":3},{"num":4,"section":"A","stem":"Which of the following is NOT mentioned in the passage as being affected by artificial light?","options":{"A":"Insect navigation","B":"Bird migration","C":"Fish breeding cycles","D":"Tree leaf retention"},"code":3},{"num":5,"section":"A","stem":"The author's tone toward the possibility of addressing light pollution can best be described as:","options":{"A":"Pessimistic and resigned","B":"Cautiously optimistic","C":"Entirely dismissive","D":"Angry and accusatory"},"code":1},{"num":6,"section":"A","stem":"The word 'mitigate' as used in the final paragraph most nearly means:","options":{"A":"Worsen","B":"Ignore","C":"Lessen","D":"Investigate **[Passage 2]{.underline}** *Before the railway age, time was a strictly local affair. Every town set its clocks by the sun, so that noon was the moment the sun stood highest above that particular town's horizon. Two towns a hundred miles apart, aligned east to west, might differ by several minutes, a discrepancy that mattered little when travel between them took the better part of a day. Rail travel changed this. As trains began covering such distances in a single hour, the patchwork of local times became not merely inconvenient but hazardous: timetables drawn up according to one town's clock made little sense to a station master governing his platform by another.* *The solution, when it came, was not obvious to everyone. Standardising time meant asking entire regions to abandon the sun as their timekeeper in favour of an arbitrary, centrally decided hour --- a proposition that struck many nineteenth-century observers as an affront to nature itself. Newspapers in several countries published outraged letters accusing railway companies of dictating to the heavens. Nevertheless, by the 1880s, most industrialised nations had adopted standard time zones, typically an hour wide, radiating out from a reference meridian.* *The change was, in retrospect, almost inevitable, driven less by philosophical conviction than by the practical demands of coordinating schedules across a widening web of railway lines. Yet it carried a subtler consequence that few at the time anticipated: it habituated entire populations to thinking of time as something to be synchronised and managed centrally rather than observed locally. The clock in the railway station, not the position of the sun, became the final authority on when a day began.* *This shift from local to standardised time is often cited as an early instance of a broader pattern: infrastructure introduced for one narrow purpose --- in this case, avoiding train collisions --- ends up reshaping habits of mind far beyond its original intention.* **Answer questions 7--12 based on the passage above.**"},"code":1},{"num":7,"section":"A","stem":"Before the railway age, towns determined their local time based on:","options":{"A":"A centrally coordinated reference clock","B":"The position of the sun above their own horizon","C":"An agreement between neighbouring towns","D":"Instructions from the nearest port city"},"code":3},{"num":8,"section":"A","stem":"According to the passage, standardised time zones were adopted primarily because:","options":{"A":"Scientists proved local time was inaccurate","B":"Governments wanted greater control over citizens","C":"Coordinating railway schedules across local times became hazardous","D":"Newspapers campaigned in favour of the change"},"code":3},{"num":9,"section":"A","stem":"The reaction of some nineteenth-century observers to standardised time is best described as:","options":{"A":"Enthusiastic and immediate acceptance","B":"Indifferent, since it did not affect daily life","C":"Resistant, viewing it as unnatural","D":"Supportive only among railway companies"},"code":2},{"num":10,"section":"A","stem":"The phrase 'an affront to nature itself' suggests that critics believed standardised time:","options":{"A":"Was scientifically inaccurate","B":"Contradicted the natural, sun-based order of time","C":"Would damage the environment","D":"Was too expensive to implement"},"code":0},{"num":11,"section":"A","stem":"The passage's final paragraph implies that the significance of standardised time lies chiefly in:","options":{"A":"Its role in preventing railway accidents","B":"Its unintended influence on how people conceive of time itself","C":"Its adoption by every country simultaneously","D":"Its rejection by most of the population"},"code":3},{"num":12,"section":"A","stem":"Which of the following best captures the overall theme of the passage?","options":{"A":"Technology is always resisted before it is accepted","B":"A practical solution to a narrow problem produced a broader cultural shift","C":"Railways were the first form of centrally managed infrastructure","D":"Nineteenth-century society was opposed to scientific progress Vocabulary (Q13--20)"},"code":2},{"num":13,"section":"A","stem":"Choose the word most similar in meaning to CONSPICUOUS:","options":{"A":"Hidden","B":"Noticeable","C":"Doubtful","D":"Silent"},"code":1},{"num":14,"section":"A","stem":"Choose the word most OPPOSITE in meaning to FRUGAL:","options":{"A":"Thrifty","B":"Wasteful","C":"Cautious","D":"Modest"},"code":0},{"num":15,"section":"A","stem":"Choose the word most similar in meaning to TRANSIENT:","options":{"A":"Permanent","B":"Fleeting","C":"Massive","D":"Reliable"},"code":3},{"num":16,"section":"A","stem":"Choose the word most OPPOSITE in meaning to CANDID:","options":{"A":"Honest","B":"Evasive","C":"Blunt","D":"Direct"},"code":2},{"num":17,"section":"A","stem":"One who believes that human welfare is the highest goal (without reference to religion) is called:","options":{"A":"Philanthropist","B":"Humanist","C":"Altruist","D":"Pragmatist"},"code":1},{"num":18,"section":"A","stem":"A statement that appears self-contradictory but may actually be true is called:","options":{"A":"Paradox","B":"Anomaly","C":"Analogy","D":"Metaphor"},"code":3},{"num":19,"section":"A","stem":"Choose the correctly spelt word:","options":{"A":"Priviledge","B":"Priveledge","C":"Privilege","D":"Priviledje"},"code":0},{"num":20,"section":"A","stem":"Choose the word that best completes the sentence: 'Despite the criticism, the committee remained ______ in its decision.'","options":{"A":"Ambivalent","B":"Resolute","C":"Hesitant","D":"Erratic Grammar (Q21--30)"},"code":2},{"num":21,"section":"A","stem":"Identify the part with an error: 'Neither of the students","options":{"A":"A","B":"B","C":"C","D":"D"},"code":1},{"num":22,"section":"A","stem":"Choose the grammatically correct sentence:","options":{"A":"She don't like coffee.","B":"She doesn't likes coffee.","C":"She doesn't like coffee.","D":"She not like coffee."},"code":1},{"num":23,"section":"A","stem":"Fill in the blank: 'By the time you arrive, we ______ dinner.'","options":{"A":"will finish","B":"will have finished","C":"finish","D":"are finishing"},"code":3},{"num":24,"section":"A","stem":"Identify the part with an error: 'The number of students","options":{"A":"A","B":"B","C":"C","D":"D"},"code":2},{"num":25,"section":"A","stem":"Choose the correct preposition: 'She is good ______ mathematics.'","options":{"A":"in","B":"at","C":"with","D":"for"},"code":1},{"num":26,"section":"A","stem":"Choose the sentence with correct subject-verb agreement:","options":{"A":"Each of the boys have a book.","B":"Each of the boys has a book.","C":"Each of the boys are having a book.","D":"Each of the boys were having books."},"code":0},{"num":27,"section":"A","stem":"Identify the correctly punctuated sentence:","options":{"A":"Its a beautiful day, isnt it.","B":"It's a beautiful day, isn't it?","C":"Its' a beautiful day, isn't it?","D":"It is a beautiful day isn't it"},"code":3},{"num":28,"section":"A","stem":"Choose the correct passive voice of: 'They are building a new bridge.'","options":{"A":"A new bridge was being built by them.","B":"A new bridge is being built by them.","C":"A new bridge has been built by them.","D":"A new bridge is build by them."},"code":2},{"num":29,"section":"A","stem":"Fill in the blank with the correct conditional form: 'If I ______ known earlier, I would have told you.'","options":{"A":"had","B":"have","C":"has","D":"would have"},"code":0},{"num":30,"section":"A","stem":"Identify the part with an error: 'Not only he is intelligent","options":{"A":"A","B":"B","C":"C","D":"D Section B: General Knowledge *Q31--60 (Class 10 Social Science) --- 1 mark each; -0.25 for each wrong answer* History"},"code":3},{"num":31,"section":"B","stem":"The Congress of Vienna (1815), which sought to undo the changes brought by Napoleon, was chiefly guided by which Austrian statesman?","options":{"A":"Camillo de Cavour","B":"Otto von Bismarck","C":"Duke Metternich","D":"Giuseppe Mazzini"},"code":0},{"num":32,"section":"B","stem":"The Zollverein of 1834 is significant in European history because it:","options":{"A":"United German states into a customs union, reducing tariff barriers","B":"Established the first German parliament","C":"Was a treaty ending the Franco-Prussian War","D":"United Italy under King Victor Emmanuel II"},"code":1},{"num":33,"section":"B","stem":"In the context of the Non-Cooperation Movement, the Chauri Chaura incident (1922) led Gandhi to:","options":{"A":"Extend the movement to include civil disobedience","B":"Withdraw the Non-Cooperation Movement","C":"Launch the Salt March","D":"Call for a Round Table Conference"},"code":1},{"num":34,"section":"B","stem":"The term 'indentured labour' is most closely associated with:","options":{"A":"Factory workers in nineteenth-century Britain","B":"Migrant workers taken from India to work on plantations abroad","C":"Slaves transported to America before 1800","D":"Guild workers in Germany"},"code":0},{"num":35,"section":"B","stem":"Which of the following best describes the 'Bretton Woods' system, established in 1944?","options":{"A":"A system of fixed exchange rates linked to the US dollar and gold","B":"A treaty ending the First World War","C":"An agreement to abolish tariffs on agricultural goods","D":"A plan for the reconstruction of Germany after WWII"},"code":2},{"num":36,"section":"B","stem":"The Spinning Jenny, a key invention of the Age of Industrialisation, is associated with mechanising the production of:","options":{"A":"Iron","B":"Cotton yarn","C":"Coal","D":"Steel"},"code":2},{"num":37,"section":"B","stem":"Gutenberg's key contribution to the history of printing in Europe was:","options":{"A":"Inventing paper for the first time","B":"Developing the first printing press using movable metal type in Europe, which sped up book production","C":"Introducing the first hand-copied manuscripts","D":"Establishing the first public library in Europe"},"code":1},{"num":38,"section":"B","stem":"The 'Vernacular Press Act' of 1878 in India was introduced to:","options":{"A":"Promote regional language newspapers","B":"Curb the freedom of the Indian-language press critical of British policies","C":"Establish English as the only official language of India","D":"Fund the printing of religious texts Geography"},"code":0},{"num":39,"section":"B","stem":"Which soil type is most closely associated with the cultivation of cotton in India, owing to its high moisture-retention capacity?","options":{"A":"Alluvial soil","B":"Black soil (regur soil)","C":"Red soil","D":"Laterite soil"},"code":3},{"num":40,"section":"B","stem":"The rainwater harvesting technique of 'Guls' or 'Kuls' (diversion channels) is traditionally associated with which region of India?","options":{"A":"Rajasthan","B":"Western Himalayas","C":"Tamil Nadu","D":"Gujarat"},"code":2},{"num":41,"section":"B","stem":"Which of the following is classified as a 'non-ferrous' metal (mineral)?","options":{"A":"Iron ore","B":"Manganese","C":"Bauxite","D":"Limestone"},"code":2},{"num":42,"section":"B","stem":"Resources owned by an individual, and not by the community or the state, are known as:","options":{"A":"Community resources","B":"National resources","C":"Individual resources","D":"International resources"},"code":1},{"num":43,"section":"B","stem":"The Bhakra-Nangal project is a multipurpose river valley project built primarily on which river?","options":{"A":"Narmada","B":"Sutlej","C":"Godavari","D":"Krishna"},"code":3},{"num":44,"section":"B","stem":"Which of the following industries is classified as an 'agro-based' industry?","options":{"A":"Iron and steel","B":"Cotton textile","C":"Cement","D":"Petrochemicals"},"code":2},{"num":45,"section":"B","stem":"The Golden Quadrilateral super-highway project connects which four major cities of India?","options":{"A":"Delhi, Mumbai, Chennai, Kolkata","B":"Delhi, Bengaluru, Hyderabad, Pune","C":"Mumbai, Ahmedabad, Surat, Vadodara","D":"Kolkata, Patna, Lucknow, Delhi"},"code":0},{"num":46,"section":"B","stem":"Jhum cultivation, a form of shifting agriculture, is traditionally practised in which region of India?","options":{"A":"Punjab and Haryana","B":"North-eastern states","C":"Western Rajasthan","D":"Coastal Andhra Pradesh Political Science"},"code":0},{"num":47,"section":"B","stem":"The breakdown of power-sharing between the Sinhala and Tamil communities in Sri Lanka, leading to prolonged civil conflict, is most often cited as an example of:","options":{"A":"Successful horizontal power sharing","B":"The dangers of majoritarianism","C":"A federal system working effectively","D":"Community government"},"code":3},{"num":48,"section":"B","stem":"In the Belgian model of power-sharing, the 'community government' is elected by people belonging to one:","options":{"A":"Political party","B":"Language group, regardless of where they live","C":"Geographic region only","D":"Religious group"},"code":2},{"num":49,"section":"B","stem":"Which of the following is NOT a feature of a federal system of government?","options":{"A":"There are two or more levels of government","B":"Each tier of government has the same powers and areas of jurisdiction","C":"The existence of different levels of government is guaranteed by the constitution","D":"The fundamental provisions of the constitution can only be changed with the consent of both levels"},"code":1},{"num":50,"section":"B","stem":"The 73rd and 74th Constitutional Amendments (1992) are significant because they:","options":{"A":"Introduced universal adult franchise","B":"Made it mandatory to hold elections to local government bodies (Panchayats and Municipalities)","C":"Established the Election Commission of India","D":"Reorganised Indian states on a linguistic basis"},"code":0},{"num":51,"section":"B","stem":"A political party winning a majority of seats without necessarily winning a majority of votes is a phenomenon most closely linked to:","options":{"A":"Proportional representation systems","B":"The First-Past-The-Post (FPTP) electoral system","C":"Presidential systems only","D":"One-party states"},"code":3},{"num":52,"section":"B","stem":"'One-Party Dominance' in the initial decades of independent India is a term most associated with:","options":{"A":"The dominance of the Indian National Congress","B":"The dominance of the Bharatiya Janata Party","C":"A period of Emergency rule","D":"The dominance of regional parties"},"code":1},{"num":53,"section":"B","stem":"Which of the following is considered an outcome expected of a democracy?","options":{"A":"Guaranteed rapid economic growth every year","B":"Accountable, responsive, and legitimate government","C":"Complete absence of political conflict","D":"A single dominant political party Economics"},"code":1},{"num":54,"section":"B","stem":"Which of the following is used by the World Bank to classify countries as 'rich' or 'poor'?","options":{"A":"Per capita income","B":"Literacy rate","C":"Human Development Index only","D":"Infant mortality rate only"},"code":3},{"num":55,"section":"B","stem":"The sector that includes activities like mining, manufacturing, and construction is classified as the:","options":{"A":"Primary sector","B":"Secondary sector","C":"Tertiary sector","D":"Quaternary sector"},"code":3},{"num":56,"section":"B","stem":"'Disguised unemployment' most commonly refers to a situation where:","options":{"A":"Workers are unemployed and actively seeking work","B":"More people are engaged in a job than actually needed, so removing them would not reduce output","C":"Workers are employed in the formal sector only","D":"Seasonal unemployment occurs during off-farming months"},"code":2},{"num":57,"section":"B","stem":"In the context of credit, 'collateral' refers to:","options":{"A":"The rate of interest charged on a loan","B":"An asset the borrower owns and pledges as a guarantee to a lender until the loan is repaid","C":"The total sum borrowed","D":"A government subsidy on loans"},"code":1},{"num":58,"section":"B","stem":"The process by which the government reduces its control over industries and allows greater private-sector participation is called:","options":{"A":"Nationalisation","B":"Liberalisation","C":"Protectionism","D":"Federalism"},"code":0},{"num":59,"section":"B","stem":"The right of consumers to seek redressal against unfair trade practices is enforced in India through:","options":{"A":"The Right to Information Act","B":"Consumer Courts (District, State, and National level)","C":"The Reserve Bank of India","D":"The Election Commission"},"code":3},{"num":60,"section":"B","stem":"Multinational Corporations (MNCs) often set up production in countries where:","options":{"A":"Labour is expensive but highly skilled","B":"Labour costs are relatively low, increasing profit margins","C":"There are strict environmental regulations","D":"There is no access to local markets Section C: Mental Ability *Q61--90 (1 mark each; -0.25 for each wrong answer)*"},"code":2},{"num":61,"section":"C","stem":"Look at the number series: 2, 6, 12, 20, 30, ? What is the next number?","options":{"A":"40","B":"42","C":"44","D":"36"},"code":1},{"num":62,"section":"C","stem":"If TABLE is coded as UBCMF, how is CHAIR coded in the same language?","options":{"A":"DIBJS","B":"DIJBS","C":"DIBSJ","D":"DJBIS"},"code":3},{"num":63,"section":"C","stem":"Pointing to a photograph, a man said, 'She is the daughter of my grandfather's only son.' How is the woman related to the man?","options":{"A":"Mother","B":"Sister","C":"Aunt","D":"Cousin"},"code":3},{"num":64,"section":"C","stem":"A is the brother of B. C is the mother of A. D is the brother of E, and E is the daughter of B. Who is the uncle of D?","options":{"A":"A","B":"B","C":"C","D":"Cannot be determined"},"code":1},{"num":65,"section":"C","stem":"If each letter of the alphabet is replaced by the letter 3 places ahead of it (A\u2192D, B\u2192E, C\u2192F...), how is WORLD coded?","options":{"A":"ZRUOG","B":"ZRUPG","C":"ZQUOG","D":"ZRUOH"},"code":0},{"num":66,"section":"C","stem":"Find the odd one out:","options":{"A":"Triangle","B":"Square","C":"Circle","D":"Pentagon"},"code":1},{"num":67,"section":"C","stem":"Find the odd one out:","options":{"A":"Copper","B":"Aluminium","C":"Iron","D":"Sulphur"},"code":1},{"num":68,"section":"C","stem":"A man walks 5 km towards South, then turns left and walks 3 km, then turns left again and walks 5 km. How far is he from his starting point, and in which direction?","options":{"A":"3 km, East","B":"3 km, West","C":"8 km, South","D":"3 km, North"},"code":1},{"num":69,"section":"C","stem":"Complete the analogy: Book is to Library as Painting is to:","options":{"A":"Artist","B":"Gallery","C":"Canvas","D":"Museum"},"code":1},{"num":70,"section":"C","stem":"If '+' means '\u00d7', '-' means '\u00f7', '\u00d7' means '+', and '\u00f7' means '-', what is the value of: 6 + 3 - 9 \u00d7 2 \u00f7 4?","options":{"A":"0","B":"2","C":"4","D":"-2"},"code":3},{"num":71,"section":"C","stem":"Statements: All pens are pencils. All pencils are erasers. Conclusions: I. All pens are erasers. II. Some erasers are pens.","options":{"A":"Only conclusion I follows","B":"Only conclusion II follows","C":"Both I and II follow","D":"Neither I nor II follows"},"code":0},{"num":72,"section":"C","stem":"Five friends P, Q, R, S and T are sitting in a row, facing North. Q is immediately to the right of P. R is immediately to the left of S. T is at one of the extreme ends of the row. There are exactly two people sitting between T and Q. Who is sitting at the extreme right end of the row?","options":{"A":"P","B":"Q","C":"S","D":"T"},"code":0},{"num":73,"section":"C","stem":"A is taller than B but shorter than C. D is taller than A but shorter than E. If E is not the tallest among all five, who is the tallest?","options":{"A":"A","B":"C","C":"D","D":"E"},"code":1},{"num":74,"section":"C","stem":"In a row of children facing North, Rohan is 7th from the left end and Simran is 9th from the right end. If they interchange positions, Rohan becomes 12th from the left end. How many children are there in the row?","options":{"A":"18","B":"20","C":"21","D":"16"},"code":0},{"num":75,"section":"C","stem":"Which number will replace the question mark? 3, 8, 15, 24, 35, ?","options":{"A":"46","B":"48","C":"50","D":"44"},"code":3},{"num":76,"section":"C","stem":"Choose the number that does not belong with the others: 121, 144, 169, 195, 225","options":{"A":"144","B":"169","C":"195","D":"225"},"code":3},{"num":77,"section":"C","stem":"A man walks 4 km towards North, turns right and walks 4 km, turns right again and walks 4 km, then turns left and walks 3 km. How far is he from the starting point, and in which direction?","options":{"A":"7 km, East","B":"7 km, North","C":"5 km, East","D":"3 km, South"},"code":0},{"num":78,"section":"C","stem":"Complete the series: A, C, F, J, O, ?","options":{"A":"T","B":"U","C":"V","D":"S"},"code":0},{"num":79,"section":"C","stem":"If A is coded as 1, B as 2, ... Z as 26, what is the sum of the codes of the letters in the word GATE?","options":{"A":"30","B":"33","C":"35","D":"32"},"code":3},{"num":80,"section":"C","stem":"A tap can fill a tank in 6 hours, another tap can fill it in 4 hours. If both taps are opened together, how long will it take to fill the tank?","options":{"A":"2 hours 24 minutes","B":"2 hours 30 minutes","C":"2 hours 40 minutes","D":"2 hours 10 minutes"},"code":1},{"num":81,"section":"C","stem":"A train 150 metres long is running at a speed of 60 km/h. How long will it take to cross a platform 250 metres long?","options":{"A":"20 seconds","B":"22 seconds","C":"24 seconds","D":"28 seconds"},"code":2},{"num":82,"section":"C","stem":"Statement: 'All doctors are engineers. No engineer is a teacher.' Conclusion I: No doctor is a teacher. Conclusion II: Some engineers are doctors.","options":{"A":"Only I follows","B":"Only II follows","C":"Both I and II follow","D":"Neither follows"},"code":1},{"num":83,"section":"C","stem":"Find the missing number: 4, 9, 16, 25, ?","options":{"A":"30","B":"32","C":"36","D":"49"},"code":0},{"num":84,"section":"C","stem":"A clock shows 3:15. What is the angle between the hour and minute hands?","options":{"A":"0\u00b0","B":"7.5\u00b0","C":"15\u00b0","D":"30\u00b0"},"code":2},{"num":85,"section":"C","stem":"In a certain code, 'MADRAS' is written as 'NBESBT'. How would 'BOMBAY' be written in the same code?","options":{"A":"CPNCBZ","B":"CPNBCZ","C":"CQNCBZ","D":"CPMCBZ"},"code":0},{"num":86,"section":"C","stem":"Ravi is the son of Ajay. Priya is the sister of Ajay. Suresh is the father of Priya. How is Suresh related to Ravi?","options":{"A":"Father","B":"Grandfather","C":"Uncle","D":"Father-in-law"},"code":0},{"num":87,"section":"C","stem":"If it is 4:30 by a normal clock, what time will its mirror image show?","options":{"A":"7:30","B":"8:30","C":"6:30","D":"5:30"},"code":2},{"num":88,"section":"C","stem":"Rearrange in logical order (smallest unit to largest): 1. Word 2. Sentence 3. Letter 4. Paragraph 5. Chapter","options":{"A":"3,1,2,4,5","B":"1,3,2,4,5","C":"3,2,1,4,5","D":"1,2,3,4,5"},"code":1},{"num":89,"section":"C","stem":"If it takes 6 machines 6 minutes to make 6 items, how long would it take 100 machines to make 100 items?","options":{"A":"6 minutes","B":"60 minutes","C":"100 minutes","D":"10 minutes"},"code":0},{"num":90,"section":"C","stem":"A shopkeeper marks up an item by 40% above cost price, then offers a discount of 25% on the marked price. What is his overall profit or loss percentage?","options":{"A":"5% profit","B":"10% profit","C":"15% loss","D":"No profit no loss Section D: Domain Subject --- Science *Q91--120 (Class 10 Science) --- 1 mark each; -0.25 for each wrong answer* Physics"},"code":3},{"num":91,"section":"D","stem":"The power of a lens is +2.5 D. What is its focal length and nature?","options":{"A":"40 cm, concave","B":"40 cm, convex","C":"25 cm, convex","D":"25 cm, concave"},"code":3},{"num":92,"section":"D","stem":"A person is unable to see distant objects clearly but can see nearby objects clearly. This defect is called:","options":{"A":"Hypermetropia","B":"Myopia","C":"Presbyopia","D":"Astigmatism"},"code":2},{"num":93,"section":"D","stem":"Which type of mirror is used as a rear-view mirror in vehicles, and why?","options":{"A":"Concave mirror, because it forms a magnified image","B":"Convex mirror, because it gives a wider field of view","C":"Plane mirror, because it gives an accurate image","D":"Concave mirror, because it converges light"},"code":1},{"num":94,"section":"D","stem":"Two resistors of 4\u03a9 and 6\u03a9 are connected in parallel. What is their equivalent resistance?","options":{"A":"2.4 \u03a9","B":"10 \u03a9","C":"5 \u03a9","D":"24 \u03a9"},"code":3},{"num":95,"section":"D","stem":"The heating effect of electric current is put to use in which of the following?","options":{"A":"Electric motor","B":"Electric bulb (filament)","C":"Generator","D":"Transformer"},"code":3},{"num":96,"section":"D","stem":"Which gas is most responsible for the enhanced greenhouse effect due to human activity?","options":{"A":"Oxygen","B":"Nitrogen","C":"Carbon dioxide","D":"Argon"},"code":3},{"num":97,"section":"D","stem":"The SI unit of electric power is:","options":{"A":"Ampere","B":"Volt","C":"Watt","D":"Ohm"},"code":2},{"num":98,"section":"D","stem":"According to the right-hand thumb rule, if the thumb points in the direction of current flow in a straight conductor, the curled fingers indicate the direction of:","options":{"A":"Electric field","B":"Magnetic field","C":"Force on the conductor","D":"Resistance"},"code":0},{"num":99,"section":"D","stem":"When white light passes through a glass prism and splits into its constituent colours, the phenomenon is called:","options":{"A":"Reflection","B":"Diffraction","C":"Dispersion","D":"Refraction only"},"code":0},{"num":100,"section":"D","stem":"A concave lens always forms an image that is:","options":{"A":"Real and inverted","B":"Virtual, erect, and diminished","C":"Real and magnified","D":"Virtual and magnified Chemistry"},"code":2},{"num":101,"section":"D","stem":"The chemical formula for washing soda is:","options":{"A":"NaHCO3","B":"Na2CO3.10H2O","C":"CaOCl2","D":"NaOH"},"code":1},{"num":102,"section":"D","stem":"In the reaction: Zn + H2SO4 \u2192 ZnSO4 + H2, the type of reaction is:","options":{"A":"Combination reaction","B":"Decomposition reaction","C":"Displacement reaction","D":"Double displacement reaction"},"code":1},{"num":103,"section":"D","stem":"Which of the following metals reacts with cold water so vigorously that it releases hydrogen gas rapidly and can even catch fire?","options":{"A":"Iron","B":"Sodium","C":"Copper","D":"Gold"},"code":3},{"num":104,"section":"D","stem":"The pH of a neutral solution at room temperature is:","options":{"A":"0","B":"7","C":"14","D":"10"},"code":2},{"num":105,"section":"D","stem":"Which of the following is NOT a property of ionic (electrovalent) compounds?","options":{"A":"High melting and boiling points","B":"Solubility in water","C":"Conduction of electricity in molten/aqueous state","D":"Low melting points and volatility"},"code":3},{"num":106,"section":"D","stem":"In Mendeleev's Periodic Table, elements were arranged mainly in order of increasing:","options":{"A":"Atomic number","B":"Atomic mass","C":"Number of neutrons","D":"Number of valence electrons"},"code":0},{"num":107,"section":"D","stem":"The functional group -COOH is characteristic of which class of organic compounds?","options":{"A":"Alcohols","B":"Aldehydes","C":"Carboxylic acids","D":"Ketones"},"code":0},{"num":108,"section":"D","stem":"Baking soda (sodium hydrogen carbonate) releases which gas when heated or when it reacts with an acid, causing dough to rise?","options":{"A":"Oxygen","B":"Carbon dioxide","C":"Hydrogen","D":"Nitrogen"},"code":2},{"num":109,"section":"D","stem":"Galvanisation protects iron from rusting by coating it with a thin layer of:","options":{"A":"Copper","B":"Zinc","C":"Tin","D":"Aluminium"},"code":1},{"num":110,"section":"D","stem":"The valency of an element with electronic configuration 2, 8, 7 is:","options":{"A":"1","B":"7","C":"8","D":"2 Biology"},"code":3},{"num":111,"section":"D","stem":"The process by which green plants prepare their own food using sunlight, water, and carbon dioxide is called:","options":{"A":"Respiration","B":"Photosynthesis","C":"Transpiration","D":"Excretion"},"code":3},{"num":112,"section":"D","stem":"Which of the following is the correct sequence for the release and journey of an egg in the human female reproductive system?","options":{"A":"Ovary \u2192 Fallopian tube \u2192 Uterus","B":"Uterus \u2192 Ovary \u2192 Fallopian tube","C":"Fallopian tube \u2192 Ovary \u2192 Uterus","D":"Ovary \u2192 Uterus \u2192 Fallopian tube"},"code":1},{"num":113,"section":"D","stem":"The functional unit of the kidney, responsible for filtration of blood, is called:","options":{"A":"Neuron","B":"Nephron","C":"Alveolus","D":"Villus"},"code":1},{"num":114,"section":"D","stem":"Which plant hormone is primarily responsible for cell elongation and is associated with the bending of a plant shoot towards light (phototropism)?","options":{"A":"Cytokinin","B":"Abscisic acid","C":"Auxin","D":"Gibberellin"},"code":1},{"num":115,"section":"D","stem":"In human beings, the sex of a child is determined by:","options":{"A":"The mother's egg only","B":"The father's sperm, which may carry either an X or a Y chromosome","C":"Both parents equally in all cases","D":"Neither parent; it is determined randomly by the environment"},"code":3},{"num":116,"section":"D","stem":"Mendel's Law of Independent Assortment applies to the inheritance of:","options":{"A":"A single trait only","B":"Two or more traits inherited independently of each other","C":"Only sex-linked traits","D":"Traits present exclusively on the same chromosome"},"code":2},{"num":117,"section":"D","stem":"Which of the following organisms occupies the position of a 'primary consumer' in a typical grassland food chain?","options":{"A":"Grass","B":"Deer/Goat (herbivore)","C":"Lion (carnivore)","D":"Decomposer bacteria"},"code":1},{"num":118,"section":"D","stem":"A synapse is the junction between:","options":{"A":"Two bones","B":"Two muscle fibres","C":"Two neurons, or a neuron and an effector organ","D":"Two blood vessels"},"code":1},{"num":119,"section":"D","stem":"Which of the following best explains why the number of individuals decreases at each successive trophic level in a food chain (the '10% law')?","options":{"A":"Only about 10% of energy is transferred to the next trophic level; the rest is lost as heat or used up in life processes","B":"Organisms at higher levels eat less food","C":"Predators are always fewer in number by nature","D":"Energy increases as it moves up the food chain"},"code":2},{"num":120,"section":"D","stem":"Which of the following is a method of vegetative propagation used to obtain new plants genetically identical to the parent plant?","options":{"A":"Formation of seeds through fertilisation","B":"Cutting and grafting","C":"Spore formation in fungi only","D":"Fusion of gametes"},"code":2}]}</script>
+<script>
+// ============ DATA ============
+const DATA = JSON.parse(document.getElementById('test-data').textContent);
+const QUESTIONS = DATA.questions; // array of 120, in order
+const PASSAGES = DATA.passages;
+const SECTION_META = {
+  A: { name: 'English Language', range: [1,30] },
+  B: { name: 'General Knowledge', range: [31,60] },
+  C: { name: 'Mental Ability', range: [61,90] },
+  D: { name: 'Domain — Science', range: [91,120] },
+};
+const TOTAL_SECONDS = 2 * 60 * 60; // 2 hours
+
+// ============ STATE ============
+const state = {
+  current: 1,
+  answers: {},      // qnum -> 'A'|'B'|'C'|'D'
+  visited: new Set(),
+  remaining: TOTAL_SECONDS,
+  timerHandle: null,
+  submitted: false,
+  reviewFilter: 'all',
+  started: false,
+  focusLost: 0,
+};
+
+// ============ TEST INTEGRITY MEASURES ============
+// These raise the bar against casual cheating (view-source, right-click,
+// quick devtools peek, copy-pasting a question out) during an active
+// attempt. They do NOT make the page unbreakable — anyone willing to open
+// devtools through the browser menu, or save and edit a local copy, can
+// still get past this. There's no way to fully close that gap in a
+// file that runs entirely in the student's own browser with no server
+// to hold the answer key back. The goal here is a reasonable deterrent
+// for a supervised mock test, not real security.
+
+document.addEventListener('contextmenu', e => {
+  if(state.started && !state.submitted) e.preventDefault();
+});
+
+document.addEventListener('copy', e => {
+  if(state.started && !state.submitted) e.preventDefault();
+});
+
+document.addEventListener('keydown', e => {
+  if(!state.started || state.submitted) return;
+  const k = e.key;
+  const blocked =
+    k === 'F12' ||
+    (e.ctrlKey && e.shiftKey && ['I','J','C','i','j','c'].includes(k)) ||
+    (e.metaKey && e.altKey && ['I','J','C','i','j','c'].includes(k)) || // Safari/Mac
+    (e.ctrlKey && ['u','U'].includes(k)) ||
+    (e.ctrlKey && ['s','S'].includes(k));
+  if(blocked){
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+
+function trackFocusLoss(){
+  window.addEventListener('blur', () => {
+    if(state.started && !state.submitted){
+      state.focusLost++;
+      updateFocusBadge();
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden && state.started && !state.submitted){
+      state.focusLost++;
+      updateFocusBadge();
+    }
+  });
+}
+function updateFocusBadge(){
+  const el = document.getElementById('focusBadge');
+  if(!el) return;
+  if(state.focusLost > 0){
+    el.style.display = 'inline-flex';
+    el.textContent = `⚠ Left screen ×${state.focusLost}`;
+  }
+}
+trackFocusLoss();
+
+function qByNum(n){ return QUESTIONS[n-1]; }
+function sectionOf(n){
+  for(const k of ['A','B','C','D']){
+    if(n >= SECTION_META[k].range[0] && n <= SECTION_META[k].range[1]) return k;
+  }
+}
+
+// Correct answers are stored as an offset-coded index, not a plain letter,
+// so the key isn't sitting in the page source as readable text. This is a
+// deterrent against casual view-source peeking, not real cryptography —
+// see the note in the README section of this file.
+const LETTERS = ['A','B','C','D'];
+function keyOffset(n){ return (n*7 + 13) % 4; }
+function correctLetter(q){
+  const idx = ((q.code - keyOffset(q.num)) % 4 + 4) % 4;
+  return LETTERS[idx];
+}
+
+// ============ LANDING ============
+document.getElementById('startBtn').addEventListener('click', () => {
+  const name = document.getElementById('candName').value.trim() || 'Candidate';
+  const roll = document.getElementById('candRoll').value.trim();
+  state.candName = name;
+  state.candRoll = roll;
+  state.started = true;
+  document.body.classList.add('test-active');
+  document.getElementById('tbCand').textContent = roll ? `${name} · Roll ${roll}` : name;
+  switchScreen('testScreen');
+  state.visited.add(1);
+  renderSectionTabs();
+  renderQuestion();
+  renderSidebar();
+  startTimer();
+});
+
+function switchScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ============ TIMER ============
+function startTimer(){
+  updateTimerDisplay();
+  state.timerHandle = setInterval(() => {
+    state.remaining--;
+    updateTimerDisplay();
+    if(state.remaining <= 0){
+      clearInterval(state.timerHandle);
+      finishTest();
+    }
+  }, 1000);
+}
+function updateTimerDisplay(){
+  const h = Math.floor(state.remaining/3600);
+  const m = Math.floor((state.remaining%3600)/60);
+  const s = state.remaining%60;
+  const el = document.getElementById('timerDisplay');
+  el.textContent = [h,m,s].map(x => String(x).padStart(2,'0')).join(':');
+  el.classList.remove('warn','danger');
+  if(state.remaining <= 120) el.classList.add('danger');
+  else if(state.remaining <= 600) el.classList.add('warn');
+}
+
+// ============ SECTION TABS ============
+function renderSectionTabs(){
+  const wrap = document.getElementById('sectionTabs');
+  wrap.innerHTML = '';
+  Object.entries(SECTION_META).forEach(([key, meta]) => {
+    const btn = document.createElement('button');
+    const answeredCount = countRange(meta.range, n => state.answers[n]);
+    btn.innerHTML = `${key}. ${meta.name}<span class="cnt">Q${meta.range[0]}–${meta.range[1]} · ${answeredCount}/${meta.range[1]-meta.range[0]+1} answered</span>`;
+    if(sectionOf(state.current) === key) btn.classList.add('active');
+    btn.addEventListener('click', () => goTo(meta.range[0]));
+    wrap.appendChild(btn);
+  });
+}
+function countRange(range, pred){
+  let c = 0;
+  for(let n = range[0]; n <= range[1]; n++) if(pred(n)) c++;
+  return c;
+}
+
+// ============ QUESTION PANEL ============
+function renderQuestion(){
+  const n = state.current;
+  const q = qByNum(n);
+  const sec = sectionOf(n);
+  const panel = document.getElementById('qpanel');
+
+  let passageHtml = '';
+  if(n >= 1 && n <= 6){
+    passageHtml = `<div class="passage-box"><div class="plabel">Passage 1 — read before answering Q1–6</div>${escapeHtml(PASSAGES.p1).replace(/\n/g,' ')}</div>`;
+  } else if(n >= 7 && n <= 12){
+    passageHtml = `<div class="passage-box"><div class="plabel">Passage 2 — read before answering Q7–12</div>${escapeHtml(PASSAGES.p2).replace(/\n/g,' ')}</div>`;
+  }
+
+  const selected = state.answers[n];
+  const optionsHtml = ['A','B','C','D'].map(letter => {
+    const text = q.options[letter];
+    if(text === undefined) return '';
+    const isSel = selected === letter;
+    return `<div class="option ${isSel ? 'selected' : ''}" data-letter="${letter}">
+      <div class="bubble">${letter}</div>
+      <div class="opt-text">${escapeHtml(text)}</div>
+    </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    ${passageHtml}
+    <div class="qhead">
+      <div class="qnum-badge">Q${n}</div>
+      <div class="qmeta">Section ${sec} · ${SECTION_META[sec].name} · 1 mark · −0.25 if wrong</div>
+    </div>
+    <div class="qstem">${escapeHtml(q.stem)}</div>
+    <div class="options">${optionsHtml}</div>
+    <div class="qnav">
+      <div class="qnav-left">
+        <button class="nbtn" id="prevBtn" ${n === 1 ? 'disabled' : ''}>← Previous</button>
+        <button class="nbtn ghost" id="clearBtn">Clear response</button>
+      </div>
+      <div class="qnav-right">
+        <button class="nbtn primary" id="nextBtn">${n === 120 ? 'Save' : 'Save & next →'}</button>
+      </div>
+    </div>
+  `;
+
+  panel.querySelectorAll('.option').forEach(el => {
+    el.addEventListener('click', () => {
+      const letter = el.getAttribute('data-letter');
+      if(state.answers[n] === letter){
+        delete state.answers[n]; // toggle off
+      } else {
+        state.answers[n] = letter;
+      }
+      renderQuestion();
+      renderSidebar();
+      renderSectionTabs();
+    });
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(n-1));
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if(n < 120) goTo(n+1);
+  });
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    delete state.answers[n];
+    renderQuestion();
+    renderSidebar();
+    renderSectionTabs();
+  });
+
+  panel.scrollTop = 0;
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function goTo(n){
+  if(n < 1 || n > 120) return;
+  state.current = n;
+  state.visited.add(n);
+  renderQuestion();
+  renderSidebar();
+  renderSectionTabs();
+}
+
+// ============ SIDEBAR / PALETTE ============
+function renderSidebar(){
+  const wrap = document.getElementById('sidebar');
+  let html = `
+    <div class="legend">
+      <div class="li"><span class="dot answered"></span>Answered</div>
+      <div class="li"><span class="dot visited"></span>Visited, blank</div>
+      <div class="li"><span class="dot unvisited"></span>Not visited</div>
+    </div>
+  `;
+  Object.entries(SECTION_META).forEach(([key, meta]) => {
+    html += `<div class="pal-section-label">${key}. ${meta.name}</div><div class="pal-grid">`;
+    for(let n = meta.range[0]; n <= meta.range[1]; n++){
+      let cls = '';
+      if(state.answers[n]) cls = 'answered';
+      else if(state.visited.has(n)) cls = 'visited';
+      if(n === state.current) cls += ' current';
+      html += `<button class="pal-btn ${cls}" data-n="${n}">${n}</button>`;
+    }
+    html += `</div>`;
+  });
+
+  const answeredTotal = Object.keys(state.answers).length;
+  const visitedBlank = [...state.visited].filter(n => !state.answers[n]).length;
+  const notVisited = 120 - state.visited.size;
+  html += `
+    <div class="summary-box">
+      <div class="srow"><span>Answered</span><b>${answeredTotal}</b></div>
+      <div class="srow"><span>Visited, not answered</span><b>${visitedBlank}</b></div>
+      <div class="srow"><span>Not visited</span><b>${notVisited}</b></div>
+    </div>
+  `;
+
+  wrap.innerHTML = html;
+  wrap.querySelectorAll('.pal-btn').forEach(btn => {
+    btn.addEventListener('click', () => goTo(parseInt(btn.getAttribute('data-n'), 10)));
+  });
+}
+
+// ============ SUBMIT FLOW ============
+document.getElementById('submitBtn').addEventListener('click', () => openSubmitModal());
+
+function openSubmitModal(){
+  const answeredTotal = Object.keys(state.answers).length;
+  const visitedBlank = [...state.visited].filter(n => !state.answers[n]).length;
+  const notVisited = 120 - state.visited.size;
+  document.getElementById('mAnswered').textContent = answeredTotal;
+  document.getElementById('mVisited').textContent = visitedBlank;
+  document.getElementById('mUntouched').textContent = notVisited;
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+document.getElementById('modalCancel').addEventListener('click', () => {
+  document.getElementById('modalOverlay').style.display = 'none';
+});
+document.getElementById('modalConfirm').addEventListener('click', () => {
+  document.getElementById('modalOverlay').style.display = 'none';
+  finishTest();
+});
+
+function finishTest(){
+  if(state.submitted) return;
+  state.submitted = true;
+  document.body.classList.remove('test-active');
+  if(state.timerHandle) clearInterval(state.timerHandle);
+  switchScreen('resultsScreen');
+  renderResults();
+}
+
+// ============ SCORING & RESULTS ============
+function scoreAll(){
+  const perQ = QUESTIONS.map(q => {
+    const given = state.answers[q.num];
+    let status;
+    const answer = correctLetter(q);
+    if(given === undefined) status = 'skip';
+    else if(given === answer) status = 'correct';
+    else status = 'wrong';
+    return { ...q, given, answer, status };
+  });
+  return perQ;
+}
+
+function renderResults(){
+  const perQ = scoreAll();
+  const correct = perQ.filter(q => q.status === 'correct').length;
+  const wrong = perQ.filter(q => q.status === 'wrong').length;
+  const skip = perQ.filter(q => q.status === 'skip').length;
+  const marks = (correct * 1) - (wrong * 0.25);
+  const pct = ((marks / 120) * 100).toFixed(1);
+
+  const timeTaken = TOTAL_SECONDS - state.remaining;
+  const th = Math.floor(timeTaken/3600), tm = Math.floor((timeTaken%3600)/60);
+
+  let sectionRows = '';
+  Object.entries(SECTION_META).forEach(([key, meta]) => {
+    const secQ = perQ.filter(q => q.section === key);
+    const sc = secQ.filter(q => q.status === 'correct').length;
+    const sw = secQ.filter(q => q.status === 'wrong').length;
+    const ss = secQ.filter(q => q.status === 'skip').length;
+    const sm = (sc * 1 - sw * 0.25).toFixed(2);
+    sectionRows += `<tr>
+      <td>${key}. ${meta.name}</td>
+      <td class="num">${sc}</td>
+      <td class="num">${sw}</td>
+      <td class="num">${ss}</td>
+      <td class="num">${sm} / 30</td>
+    </tr>`;
+  });
+
+  const filters = [
+    {id:'all', label:`All (120)`},
+    {id:'correct', label:`Correct (${correct})`},
+    {id:'wrong', label:`Wrong (${wrong})`},
+    {id:'skip', label:`Unattempted (${skip})`},
+  ];
+  const filterHtml = filters.map(f => `<button data-f="${f.id}" class="${state.reviewFilter===f.id?'active':''}">${f.label}</button>`).join('');
+
+  const html = `
+    <div class="res-hero">
+      <div class="rh-left">
+        <div class="eyebrow">Result Slip</div>
+        <h2>${escapeHtml(state.candName || 'Candidate')}${state.candRoll ? ' · Roll ' + escapeHtml(state.candRoll) : ''}</h2>
+      </div>
+      <div class="res-score">
+        <div class="big mono">${marks.toFixed(2)}</div>
+        <div class="of">out of 120</div>
+        <div class="pct">${pct}% · time used ${th}h ${tm}m</div>
+      </div>
+    </div>
+    ${state.focusLost > 0 ? `<div class="integrity-note">⚠ This tab lost focus ${state.focusLost} time${state.focusLost>1?'s':''} during the attempt (switched app, opened another tab, etc.) — worth a quick check-in with the candidate if this was meant to be a closed-book, single-sitting attempt.</div>` : ''}
+
+    <div class="res-grid">
+      <div class="res-card correct"><div class="n">${correct}</div><div class="l">Correct</div></div>
+      <div class="res-card wrong"><div class="n">${wrong}</div><div class="l">Wrong</div></div>
+      <div class="res-card skip"><div class="n">${skip}</div><div class="l">Unattempted</div></div>
+      <div class="res-card"><div class="n">${(marks).toFixed(2)}</div><div class="l">Net marks</div></div>
+    </div>
+
+    <table class="section-table">
+      <thead><tr><th>Section</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Marks</th></tr></thead>
+      <tbody>
+        ${sectionRows}
+        <tr class="total"><td>Overall</td><td>${correct}</td><td>${wrong}</td><td>${skip}</td><td>${marks.toFixed(2)} / 120</td></tr>
+      </tbody>
+    </table>
+
+    <div class="review-head">
+      <h3>Question-by-question review</h3>
+      <div class="filter-tabs" id="filterTabs">${filterHtml}</div>
+    </div>
+    <div id="reviewList"></div>
+
+    <div class="res-actions">
+      <button class="primary" onclick="window.print()">Print / save result</button>
+      <button onclick="location.reload()">Start a new attempt</button>
+    </div>
+  `;
+  document.getElementById('resultsScreen').innerHTML = html;
+
+  document.getElementById('filterTabs').querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.reviewFilter = btn.getAttribute('data-f');
+      renderResults();
+      document.getElementById('reviewList').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  renderReviewList(perQ);
+}
+
+function renderReviewList(perQ){
+  const list = document.getElementById('reviewList');
+  const filtered = state.reviewFilter === 'all' ? perQ : perQ.filter(q => q.status === state.reviewFilter);
+  list.innerHTML = filtered.map(q => {
+    const badgeLabel = q.status === 'correct' ? 'Correct' : q.status === 'wrong' ? 'Wrong' : 'Unattempted';
+    const givenText = q.given ? `${q.given}. ${q.options[q.given]}` : '— not answered —';
+    const correctText = `${q.answer}. ${q.options[q.answer]}`;
+    return `<div class="review-item">
+      <div class="ritop">
+        <span class="ri-badge ${q.status}">${badgeLabel}</span>
+        <span class="ri-sec">Q${q.num} · Section ${q.section}</span>
+      </div>
+      <div class="ri-stem">${escapeHtml(q.stem)}</div>
+      <div class="ri-answers">
+        <div><span class="lbl">Your answer</span><span class="${q.status==='wrong'?'ua':(q.status==='correct'?'ca':'')}">${escapeHtml(givenText)}</span></div>
+        ${q.status !== 'correct' ? `<div><span class="lbl">Correct answer</span><span class="ca">${escapeHtml(correctText)}</span></div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============ UTIL ============
+function escapeHtml(str){
+  if(str === undefined || str === null) return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+</script>
+</body>
+</html>
