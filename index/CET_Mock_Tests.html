@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  CET MOCK TESTS — card list (HTML format, auto-loaded)
+  ============================================================
+  This file defines the CARDS shown in the CET exam hall. It does
+  NOT contain the actual questions — those live in a separate file
+  per test, added later. This keeps the card visible now, showing
+  an error until its matching data file is added.
+
+  FOLDER SETUP ON GITHUB
+  -----------------------
+  Put this file at:  data/CET_Mock_Tests.html
+  (relative to wherever index.html lives in your repo)
+
+  index.html already fetches this file automatically at load time
+  and runs the script block below — no copy-pasting needed.
+
+  HOW TO ADD REAL QUESTIONS LATER
+  ---------------------------------
+  1. Fill in the matching per-test file listed as `dataFile` below
+     (e.g. data/cet/mock-test-for-science.html) with the real
+     sections and questions. See that file's own comments for the
+     exact format.
+  2. Commit it. The card picks it up automatically — no further
+     edits needed here.
+  ============================================================
+-->
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+<script>
+// Shared holder that a test's own data file (once added) fills in.
+var cetTestData = (typeof cetTestData !== 'undefined') ? cetTestData : {};
+
+var cetTests = [
+  {
+    id: 'cet-mock-science',
+    title: 'Mock Test for Science',
+    subtitle: '',
+    dataFile: 'data/cet/mock-test-for-science.html',
+  },
+];
+</script>
+</body>
+</html>
