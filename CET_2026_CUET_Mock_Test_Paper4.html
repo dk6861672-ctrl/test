@@ -553,15 +553,14 @@ function sectionOf(n){
   }
 }
 
-// Correct answers are stored as an offset-coded index, not a plain letter,
-// so the key isn't sitting in the page source as readable text. This is a
-// deterrent against casual view-source peeking, not real cryptography —
-// see the note in the README section of this file.
+// Correct answers are stored as a plain 0-3 index (0=A, 1=B, 2=C, 3=D) in
+// q.code. (A previous version of this function applied an extra keyOffset
+// shift here, but the codes were never actually encoded with that offset,
+// so it was silently garbling most of the answer key. Fixed to read the
+// code directly.)
 const LETTERS = ['A','B','C','D'];
-function keyOffset(n){ return (n*7 + 13) % 4; }
 function correctLetter(q){
-  const idx = ((q.code - keyOffset(q.num)) % 4 + 4) % 4;
-  return LETTERS[idx];
+  return LETTERS[q.code];
 }
 
 // ============ LANDING ============
