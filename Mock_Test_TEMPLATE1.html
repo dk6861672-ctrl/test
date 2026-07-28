@@ -407,8 +407,9 @@ body.test-active #testScreen textarea{ -webkit-user-select:text; user-select:tex
     </div>
     <div class="ac-form">
       <div class="field">
-        <label>Candidate name (optional)</label>
-        <input id="candName" type="text" placeholder="Enter name">
+        <label>Candidate name (required)</label>
+        <input id="candName" type="text" placeholder="Enter name" required>
+        <div id="nameError" style="display:none; color:var(--red); font-size:12.5px; margin-top:6px;">Please enter your name to start the test.</div>
       </div>
       <div class="field">
         <label>Roll no. (optional)</label>
@@ -583,7 +584,16 @@ function correctLetter(q){
 
 // ============ LANDING ============
 document.getElementById('startBtn').addEventListener('click', () => {
-  const name = document.getElementById('candName').value.trim() || 'Candidate';
+  const nameInput = document.getElementById('candName');
+  const name = nameInput.value.trim();
+  const nameError = document.getElementById('nameError');
+  if(!name){
+    nameError.style.display = 'block';
+    nameInput.style.borderColor = 'var(--red)';
+    nameInput.focus();
+    return;
+  }
+  nameError.style.display = 'none';
   const roll = document.getElementById('candRoll').value.trim();
   state.candName = name;
   state.candRoll = roll;
